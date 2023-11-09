@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import renderHTML from "react-render-html";
 import moment from "moment";
 import { Avatar } from "antd";
 import PostImage from "../images/PostImage";
-import { HeartOutlined, HeartFilled, CommentOutlined } from "@ant-design/icons";
+import {
+   HeartOutlined,
+   HeartFilled,
+   CommentOutlined,
+   EditOutlined,
+   DeleteOutlined,
+} from "@ant-design/icons";
+import { UserContext } from "../../context";
+import { useRouter } from "next/router";
 
 const PostList = ({ posts }) => {
+   const [state] = useContext(UserContext);
+
+   const router = useRouter();
+
    return (
       <div>
          {posts &&
@@ -52,6 +64,24 @@ const PostList = ({ posts }) => {
                            >
                               2 comments...
                            </div>
+
+                           {state &&
+                              state.user &&
+                              state.user._id === post.postedBy._id && (
+                                 <>
+                                    <EditOutlined
+                                       onClick={() =>
+                                          router.push(`/user/post/${post._id}`)
+                                       }
+                                       className="text-danger pt-2 h5 mx-auto"
+                                       style={{ marginLeft: "2rem" }}
+                                    />
+                                    <DeleteOutlined
+                                       className="text-danger pt-2 h5"
+                                       style={{ marginLeft: "2rem" }}
+                                    />
+                                 </>
+                              )}
                         </div>
                      </div>
                   </div>

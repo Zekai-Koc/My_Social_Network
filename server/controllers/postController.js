@@ -43,7 +43,8 @@ export const postsByUser = async (req, res) => {
    console.log(req.auth);
 
    try {
-      const posts = await Post.find({ postedBy: req.auth._id })
+      // const posts = await Post.find({ postedBy: req.auth._id })
+      const posts = await Post.find()
          .populate("postedBy", "_id name image")
          .sort({ createdAt: -1 })
          .limit(10);

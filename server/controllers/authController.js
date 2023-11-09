@@ -38,7 +38,6 @@ export const register = async (req, res) => {
       email,
       password: hashedPassword,
       secret,
-      username: nanoid(6),
    });
 
    try {
