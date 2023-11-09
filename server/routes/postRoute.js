@@ -1,10 +1,14 @@
 import express from "express";
 import formidable from "express-formidable";
 
-import { createPost, uploadImage } from "../controllers/postController.js";
+import {
+   createPost,
+   uploadImage,
+   postsByUser,
+} from "../controllers/postController.js";
 
 import { requireSignin } from "../middlewares/index.js";
-import post from "../models/post.js";
+// import post from "../models/post.js";
 
 const router = express.Router();
 
@@ -15,5 +19,7 @@ router.post(
    formidable({ maxFieldsSize: 5 * 1024 * 1024 }),
    uploadImage
 );
+
+router.get("/userposts", requireSignin, postsByUser);
 
 export default router;
