@@ -5,9 +5,11 @@ import {
    createPost,
    uploadImage,
    postsByUser,
+   userPost,
+   updatePost,
 } from "../controllers/postController.js";
 
-import { requireSignin } from "../middlewares/index.js";
+import { requireSignin, canEditDeletePost } from "../middlewares/index.js";
 // import post from "../models/post.js";
 
 const router = express.Router();
@@ -21,5 +23,8 @@ router.post(
 );
 
 router.get("/userposts", requireSignin, postsByUser);
+router.get("/userpost/:_id", requireSignin, userPost);
+
+router.put("/updatepost/:_id", requireSignin, canEditDeletePost, updatePost);
 
 export default router;

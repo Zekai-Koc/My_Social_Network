@@ -1,7 +1,7 @@
 import { UserContext } from "../../context";
 import { useContext, useState, useEffect } from "react";
 import UserRoute from "../../components/routes/UserRoute";
-import CreatePostForm from "../../components/forms/CreatePostForm.js";
+import PostForm from "../../components/forms/PostForm.js";
 import { useRouter } from "next/router.js";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -23,11 +23,12 @@ const Dashboard = () => {
    const fetchUserPosts = async () => {
       try {
          const { data } = await axios.get(`/post/userposts`);
-         console.log("axios response data: ", data);
+         // console.log("axios response data: ", data);
          setPosts(data);
-         // if (data.error) {
-         //    toast.error(data.error);
-         // } else {
+         if (data.error) {
+            toast.error(data.error);
+         }
+         //  else {
          //    toast.success("Post created.");
          //    setContent("");
          //    setImage({});
@@ -46,7 +47,7 @@ const Dashboard = () => {
             content,
             image,
          });
-         console.log("axios response data: ", data);
+         // console.log("axios response data: ", data);
          if (data.error) {
             toast.error(data.error);
          } else {
@@ -92,7 +93,7 @@ const Dashboard = () => {
 
             <div className="row py-3">
                <div className="col-md-8">
-                  <CreatePostForm
+                  <PostForm
                      content={content}
                      setContent={setContent}
                      postSubmit={postSubmit}

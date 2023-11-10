@@ -8,7 +8,7 @@ cloudinary.config({
 });
 
 export const createPost = async (req, res) => {
-   console.log(req.auth);
+   // console.log(req.auth);
    const { content, image } = req.body;
    if (!content) {
       return res.json({ error: "Content is required!" });
@@ -29,7 +29,7 @@ export const uploadImage = async (req, res) => {
 
    try {
       const result = await cloudinary.uploader.upload(req.files.image.path);
-      console.log("Uploaded image url:", result.url);
+      // console.log("Uploaded image url:", result.url);
       res.json({
          url: result.secure_url,
          public_id: result.public_id,
@@ -40,7 +40,7 @@ export const uploadImage = async (req, res) => {
 };
 
 export const postsByUser = async (req, res) => {
-   console.log(req.auth);
+   // console.log(req.auth);
 
    try {
       // const posts = await Post.find({ postedBy: req.auth._id })
@@ -49,9 +49,33 @@ export const postsByUser = async (req, res) => {
          .sort({ createdAt: -1 })
          .limit(10);
 
-      console.log(posts);
+      // console.log(posts);
 
       res.json(posts);
+   } catch (error) {
+      console.log(error);
+   }
+};
+
+export const userPost = async (req, res) => {
+   // console.log("req.params._id: ", req.params._id);
+   try {
+      const post = await Post.findById(req.params._id);
+      // console.log(post);
+      res.json(post);
+   } catch (error) {
+      console.log(error);
+   }
+};
+
+export const updatePost = async (req, res) => {
+   try {
+      const post = await Post.findByIdAndUpdate(req.params._id, req.body, {
+         new: true,
+      });
+      console.log("pppppppppppp post: ", post);
+
+      res.json(post);
    } catch (error) {
       console.log(error);
    }
