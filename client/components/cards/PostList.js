@@ -13,7 +13,7 @@ import {
 import { UserContext } from "../../context";
 import { useRouter } from "next/router";
 
-const PostList = ({ posts }) => {
+const PostList = ({ posts, handleDelete }) => {
    const [state] = useContext(UserContext);
 
    const router = useRouter();
@@ -77,6 +77,7 @@ const PostList = ({ posts }) => {
                                        style={{ marginLeft: "2rem" }}
                                     />
                                     <DeleteOutlined
+                                       onClick={() => handleDelete(post)}
                                        className="text-danger pt-2 h5"
                                        style={{ marginLeft: "2rem" }}
                                     />

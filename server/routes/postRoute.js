@@ -7,6 +7,7 @@ import {
    postsByUser,
    userPost,
    updatePost,
+   deletePost,
 } from "../controllers/postController.js";
 
 import { requireSignin, canEditDeletePost } from "../middlewares/index.js";
@@ -26,5 +27,6 @@ router.get("/userposts", requireSignin, postsByUser);
 router.get("/userpost/:_id", requireSignin, userPost);
 
 router.put("/updatepost/:_id", requireSignin, canEditDeletePost, updatePost);
+router.delete("/deletepost/:_id", requireSignin, canEditDeletePost, deletePost);
 
 export default router;
