@@ -25,12 +25,20 @@ const PostList = ({ posts, handleDelete }) => {
                return (
                   <div key={post._id} className="card mb-5">
                      <div className="card-header">
-                        <Avatar size={40}>{post.postedBy.name[0]}</Avatar>
+                        <Avatar size={40}>
+                           {post &&
+                              post.postedBy &&
+                              post.postedBy.name &&
+                              post.postedBy.name[0]}
+                        </Avatar>
                         <span
                            className="pt-2 ml-3"
                            style={{ marginLeft: "0.5rem" }}
                         >
-                           {post.postedBy.name}
+                           {post &&
+                              post.postedBy &&
+                              post.postedBy.name &&
+                              post.postedBy.name}
                         </span>
                         <span
                            className="pt-2 ml-10 pl-5"

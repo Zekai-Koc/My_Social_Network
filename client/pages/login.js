@@ -41,7 +41,7 @@ const Login = () => {
                token: data.token,
             });
             localStorage.setItem("auth", JSON.stringify(data));
-            router.push("/");
+            router.push("/user/dashboard");
          }
 
          // console.log(data);
@@ -61,7 +61,7 @@ const Login = () => {
       }
    };
 
-   if (state && state.token) router.push("/");
+   if (state && state.token) router.push("/user/dashboard");
 
    return (
       <div className="container-fluid">

@@ -6,6 +6,7 @@ import { useRouter } from "next/router.js";
 import axios from "axios";
 import { toast } from "react-toastify";
 import PostList from "../../components/cards/PostList.js";
+import People from "../../components/cards/People.js";
 
 const Dashboard = () => {
    const [state, setState] = useContext(UserContext);
@@ -13,26 +14,36 @@ const Dashboard = () => {
    const [image, setImage] = useState({});
    const [uploading, setUploading] = useState(false);
    const [posts, setPosts] = useState([]);
+   const [people, setPeople] = useState([]);
 
    const router = useRouter();
 
    useEffect(() => {
-      if (state && state.token) fetchUserPosts();
+      if (state && state.token) {
+         fetchUserPosts();
+         findPeople();
+      }
    }, [state && state.token]);
 
    const fetchUserPosts = async () => {
       try {
          const { data } = await axios.get(`/post/userposts`);
-         // console.log("axios response data: ", data);
          setPosts(data);
          if (data.error) {
             toast.error(data.error);
          }
-         //  else {
-         //    toast.success("Post created.");
-         //    setContent("");
-         //    setImage({});
-         // }
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   const findPeople = async () => {
+      try {
+         const { data } = await axios.get(`/auth/findpeople`);
+         setPeople(data);
+         if (data.error) {
+            toast.error(data.error);
+         }
       } catch (error) {
          console.log(error);
       }
@@ -122,7 +133,9 @@ const Dashboard = () => {
 
                {/* <pre>{JSON.stringify(posts, null, 4)}</pre> */}
 
-               <div className="col-md-4">Sidebar</div>
+               <div className="col-md-4">
+                  <People people={people} />
+               </div>
             </div>
          </div>
       </UserRoute>

@@ -186,6 +186,22 @@ export const profileUpdate = async (req, res) => {
    }
 };
 
+export const findPeople = async (req, res) => {
+   try {
+      const user = await User.findById(req.auth._id);
+
+      let following = user.following;
+
+      following.push(user._id);
+
+      const people = await User.find({ _id: { $nin: following } }).limit(10);
+
+      res.json(people);
+   } catch (error) {
+      console.log(error);
+   }
+};
+
 /* ******************** */
 // export const register = async (req, res) => {
 //    // console.log("Register endpoint: ", req.body);

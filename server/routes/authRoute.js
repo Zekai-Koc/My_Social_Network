@@ -5,6 +5,7 @@ import {
    currentUser,
    forgotPassword,
    profileUpdate,
+   findPeople,
 } from "../controllers/authController.js";
 import { requireSignin } from "../middlewares/index.js";
 const router = express.Router();
@@ -14,5 +15,7 @@ router.post("/login", login);
 router.get("/currentuser", requireSignin, currentUser);
 router.post("/forgotpassword", forgotPassword);
 router.put("/profileupdate", requireSignin, profileUpdate);
+
+router.get("/findpeople", requireSignin, findPeople);
 
 export default router;
