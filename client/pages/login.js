@@ -10,7 +10,7 @@ import { useContext } from "react";
 
 const Login = () => {
    const [email, setEmail] = useState("zekai@test.io");
-   const [password, setPassword] = useState("12345");
+   const [password, setPassword] = useState("123456");
    const [loading, setLoading] = useState(false);
 
    const [state, setState] = useContext(UserContext);

@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 const Register = () => {
    const [name, setName] = useState("zekai");
    const [email, setEmail] = useState("zekai@test.io");
-   const [password, setPassword] = useState("12345");
+   const [password, setPassword] = useState("123456");
    const [secret, setSecret] = useState("TEST");
    const [ok, setOk] = useState(false);
    const [loading, setLoading] = useState(false);
