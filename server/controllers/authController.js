@@ -137,6 +137,51 @@ export const forgotPassword = async (req, res) => {
    }
 };
 
+export const profileUpdate = async (req, res) => {
+   console.log(req.body);
+
+   try {
+      const data = {};
+
+      if (req.body.username) {
+         data.username = req.body.username;
+      }
+      if (req.body.about) {
+         data.about = req.body.about;
+      }
+      if (req.body.usenamername) {
+         data.name = req.body.name;
+      }
+      if (req.body.password) {
+         if (req.body.password.length < 6) {
+            return res.json({
+               error: "Password with at least 6 characters required!",
+            });
+         } else {
+            data.password = await hashedPassword(req.body.password);
+         }
+      }
+      if (req.body.secret) {
+         data.secret = req.body.secret;
+      }
+
+      let user = await User.findByIdAndUpdate(req.auth._id, data, {
+         new: true,
+      });
+      // console.log(user);
+
+      (user.password = undefined), (user.secret = undefined);
+
+      res.json(user);
+   } catch (error) {
+      if (error.code == 11000) {
+         return res.json({ error: "Duplicate user name" });
+      }
+
+      console.log(error);
+   }
+};
+
 /* ******************** */
 // export const register = async (req, res) => {
 //    // console.log("Register endpoint: ", req.body);

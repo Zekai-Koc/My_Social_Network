@@ -18,7 +18,7 @@ const ProfileUpdate = () => {
    const [ok, setOk] = useState(false);
    const [loading, setLoading] = useState(false);
 
-   const [state] = useContext(UserContext);
+   const [state, setState] = useContext(UserContext);
    const router = useRouter();
 
    useEffect(() => {
@@ -43,13 +43,17 @@ const ProfileUpdate = () => {
             secret,
          });
 
-         // console.log("data", data);
+         console.log("data", data);
 
          if (data.error) {
             toast.error(data.error);
             setLoading(false);
          } else {
-            setOk(data.ok);
+            let auth = JSON.parse(localStorage.getItem("auth"));
+            auth.user = data;
+            localStorage.setItem("auth", JSON.stringify(auth));
+            setState({ ...state, user: data });
+            setOk(true);
             setLoading(false);
          }
       } catch (err) {
@@ -98,19 +102,18 @@ const ProfileUpdate = () => {
                   onCancel={() => setOk(false)}
                   footer={null}
                >
-                  <p>You have successully registered.</p>
-                  <Link href="/login">Login</Link>
+                  <p>You have successully updated your profile.</p>
                </Modal>
             </div>
          </div>
 
-         <div className="row">
+         {/* <div className="row">
             <div className="col">
                <p className="text-center">
                   Already registered? <Link href="/login">Login</Link>
                </p>
             </div>
-         </div>
+         </div> */}
       </div>
    );
 };
