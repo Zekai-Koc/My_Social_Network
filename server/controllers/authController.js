@@ -1,6 +1,7 @@
 import User from "../models/user.js";
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 import jwt from "jsonwebtoken";
+import { nanoid } from "nanoid";
 
 export const register = async (req, res) => {
    //  console.log("REGISTER ENDPOINT => ", req.body);
@@ -38,6 +39,7 @@ export const register = async (req, res) => {
       email,
       password: hashedPassword,
       secret,
+      username: `${name}_${nanoid()}`,
    });
 
    try {

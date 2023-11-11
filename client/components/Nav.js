@@ -30,19 +30,35 @@ const Nav = () => {
             My Social Network
          </Link>
 
-         {state ? (
+         {state !== null ? (
             <>
-               <Link
-                  href="/user/dashboard"
-                  className={`nav-link text-light ${
-                     currentPath === "/user/dashboard" && "active"
-                  }`}
-               >
-                  {state && state.user && state.user.name}
-               </Link>
-               <Link href="/" className="nav-link text-light " onClick={logout}>
-                  Logout
-               </Link>
+               <div className="dropdown">
+                  <a
+                     className="btn dropdown-toggle text-light"
+                     role="button"
+                     data-bs-toggle="dropdown"
+                     aria-expanded="false"
+                  >
+                     {state && state.user && state.user.name}
+                  </a>
+                  <ul className="dropdown-menu">
+                     <li>
+                        <Link
+                           href="/user/dashboard"
+                           className={`nav-link dropdown-item ${
+                              currentPath === "/user/dashboard" && "active"
+                           }`}
+                        >
+                           Dashboard
+                        </Link>
+                     </li>
+                     <li>
+                        <Link href="/" className="nav-link" onClick={logout}>
+                           Logout
+                        </Link>
+                     </li>
+                  </ul>
+               </div>
             </>
          ) : (
             <>
