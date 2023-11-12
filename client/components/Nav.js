@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { UserContext } from "../context";
 import { useContext } from "react";
+import Avatar from "antd";
 
 const Nav = () => {
    const [state, setState] = useContext(UserContext);
@@ -27,6 +28,7 @@ const Nav = () => {
                currentPath === "/" && "active"
             }`}
          >
+            {/* <Avatar src="/images/logo.jpg" /> */}
             My Social Network
          </Link>
 
