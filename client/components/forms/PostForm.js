@@ -1,9 +1,9 @@
 import React from "react";
 import { Avatar } from "antd";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 // const ReactQuill = dynamic(import("react-quill"), { ssr: false });
-// import ReactQuill from "react-quill";
-// import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { CameraOutlined, LoadingOutlined } from "@ant-design/icons";
 
 const PostForm = ({
@@ -16,7 +16,7 @@ const PostForm = ({
 }) => {
    return (
       <div className="card">
-         {/* <div className="card-body pb-3">
+         <div className="card-body pb-3">
             <form className="form-group">
                <ReactQuill
                   theme="snow"
@@ -26,7 +26,7 @@ const PostForm = ({
                   placeholder="Write your post here..."
                />
             </form>
-         </div> */}
+         </div>
 
          <div className="card-footer d-flex justify-content-between text-muted">
             <button

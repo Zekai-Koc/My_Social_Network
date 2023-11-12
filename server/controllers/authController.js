@@ -90,14 +90,19 @@ export const login = async (req, res) => {
 export const currentUser = async (req, res) => {
    // console.log("req.headers", req.headers);
    // console.log("req", req.auth);
+   console.log(" ????????????????????");
+
    try {
       const user = await User.findById(req.auth._id);
-      if (!user) return res.sendStatus(400);
+      if (!user) {
+         console.log(" ???????????????????? no user");
+         return res.sendStatus(400);
+      }
 
       res.json({ ok: true });
       // res.json(user);
    } catch (error) {
-      console.log(error);
+      console.log(" ???????????????????? ", error);
       res.sendStatus(400);
    }
 };

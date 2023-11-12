@@ -5,9 +5,11 @@ import { useRouter } from "next/router";
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-   // const [state, setState] = useState([{ user: {}, token: "" }]);
-   const [state, setState] = useState(null);
+   const [state, setState] = useState([{ user: {}, token: "" }]);
+   // const [state, setState] = useState(null);
    const router = useRouter();
+
+   console.log(" CONTEXT EXECUTED. ");
 
    useEffect(() => {
       setState(JSON.parse(localStorage.getItem("auth")));
