@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { UserContext } from "../../context";
 import { Avatar, List } from "antd";
 
-const People = ({ people }) => {
+const People = ({ people, handleFollow }) => {
    const [state] = useContext(UserContext);
    const router = useRouter();
 
@@ -27,7 +27,13 @@ const People = ({ people }) => {
                      title={
                         <div className="d-flex justify-content-between">
                            {user.username}{" "}
-                           <span className="text-primary">Follow</span>
+                           <span
+                              onClick={() => handleFollow(user)}
+                              className="text-primary pointer"
+                              style={{ border: "1px solid red" }}
+                           >
+                              Follow
+                           </span>
                         </div>
                      }
                   />

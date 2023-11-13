@@ -20,14 +20,14 @@ const Dashboard = () => {
 
    useEffect(() => {
       if (state && state.token) {
-         fetchUserPosts();
+         newsFeed();
          findPeople();
       }
    }, [state && state.token]);
 
-   const fetchUserPosts = async () => {
+   const newsFeed = async () => {
       try {
-         const { data } = await axios.get(`/post/userposts`);
+         const { data } = await axios.get(`/post/newsfeed`);
          setPosts(data);
          if (data.error) {
             toast.error(data.error);
@@ -62,7 +62,7 @@ const Dashboard = () => {
          if (data.error) {
             toast.error(data.error);
          } else {
-            fetchUserPosts();
+            newsFeed();
             toast.success("Post created.");
             setContent("");
             setImage({});
@@ -102,7 +102,29 @@ const Dashboard = () => {
          if (!answer) return;
          const data = await axios.delete(`/post/deletepost/${post._id}`);
          toast.error("Post deleted.");
-         fetchUserPosts();
+         newsFeed();
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   const handleFollow = async (user) => {
+      console.log("add user to following: ", user);
+
+      try {
+         const { data } = await axios.put("/auth/userfollow", {
+            _id: user._id,
+         });
+         // console.log("data for put user follow: ", data);
+
+         let auth = JSON.parse(localStorage.getItem("auth"));
+         auth.user = data;
+         localStorage.setItem("auth", JSON.stringify(auth));
+         setState({ ...state, user: data });
+         let filtered = people.filter((p) => p._id !== user._id);
+         setPeople(filtered);
+         newsFeed();
+         toast.success(`Following ${user.name}.`);
       } catch (error) {
          console.log(error);
       }
@@ -128,13 +150,16 @@ const Dashboard = () => {
                      image={image}
                   />
                   <br />
+                  <h3 className="text-center mb-3 text-warning">
+                     Total posts (following): {posts.length}
+                  </h3>
                   <PostList posts={posts} handleDelete={handleDelete} />
                </div>
 
                {/* <pre>{JSON.stringify(posts, null, 4)}</pre> */}
 
                <div className="col-md-4">
-                  <People people={people} />
+                  <People people={people} handleFollow={handleFollow} />
                </div>
             </div>
          </div>
