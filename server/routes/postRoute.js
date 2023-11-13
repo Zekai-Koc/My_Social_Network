@@ -8,6 +8,7 @@ import {
    userPost,
    updatePost,
    deletePost,
+   newsFeed,
 } from "../controllers/postController.js";
 
 import { requireSignin, canEditDeletePost } from "../middlewares/index.js";
@@ -23,10 +24,12 @@ router.post(
    uploadImage
 );
 
-router.get("/userposts", requireSignin, postsByUser);
+router.get("/userposts", requireSignin, postsByUser); // check if it still needed!
 router.get("/userpost/:_id", requireSignin, userPost);
 
 router.put("/updatepost/:_id", requireSignin, canEditDeletePost, updatePost);
 router.delete("/deletepost/:_id", requireSignin, canEditDeletePost, deletePost);
+
+router.get("/newsfeed", requireSignin, newsFeed);
 
 export default router;
