@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import PostList from "../../components/cards/PostList.js";
 import People from "../../components/cards/People.js";
+import Link from "next/link";
 
 const Dashboard = () => {
    const [state, setState] = useContext(UserContext);
@@ -159,6 +160,12 @@ const Dashboard = () => {
                {/* <pre>{JSON.stringify(posts, null, 4)}</pre> */}
 
                <div className="col-md-4">
+                  {state && state.user && state.user.following && (
+                     <Link href={`/user/following`}>
+                        {state.user.following.length} Following
+                     </Link>
+                  )}
+
                   <People people={people} handleFollow={handleFollow} />
                </div>
             </div>
