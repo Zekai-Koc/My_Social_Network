@@ -13,6 +13,7 @@ import {
 import { UserContext } from "../../context";
 import { useRouter } from "next/router";
 import { imageSource } from "../../functions";
+import Link from "next/link";
 
 const PostList = ({
    posts,
@@ -38,7 +39,7 @@ const PostList = ({
                               post.postedBy.name &&
                               post.postedBy.name[0]}
                         </Avatar> */}
-                        <Avatar size={40} src={imageSource(post)} />
+                        <Avatar size={40} src={imageSource(post.postedBy)} />
                         <span
                            className="pt-2 ml-3"
                            style={{ marginLeft: "0.5rem" }}
@@ -62,7 +63,10 @@ const PostList = ({
                         {post.image && <PostImage url={post.image.url} />}
 
                         <div className="d-flex">
-                           {post.likes.includes(state.user._id) ? (
+                           {state &&
+                           state.user &&
+                           post.likes &&
+                           post.likes.includes(state.user._id) ? (
                               <HeartFilled
                                  onClick={() => handleUnlike(post._id)}
                                  className="text-danger pt-2 h5"
@@ -94,7 +98,9 @@ const PostList = ({
                               className="pt-2 pl-3"
                               style={{ marginLeft: "0.7rem" }}
                            >
-                              2 comments...
+                              <Link href={`/post/${post._id}`}>
+                                 {post.comments.length} comment(s).
+                              </Link>
                            </div>
 
                            {state &&
@@ -117,6 +123,29 @@ const PostList = ({
                               )}
                         </div>
                      </div>
+
+                     {post.comments && post.comments.length > 0 && (
+                        <ol className="list-group">
+                           {post.comments.map((c) => (
+                              <li className="list-group-item d-flex justify-content-between align-item-start">
+                                 <div className="ms-6 me-auto">
+                                    <div>
+                                       <Avatar
+                                          size={25}
+                                          className="mb-1 mr-3"
+                                          src={imageSource(c.postedBy)}
+                                       />
+                                       {c.postedBy.name}
+                                    </div>
+                                    <div>{c.text}</div>
+                                 </div>
+                                 <span className="badge rounded-pill text-muted">
+                                    {moment(c.created).fromNow()}
+                                 </span>
+                              </li>
+                           ))}
+                        </ol>
+                     )}
                   </div>
                );
             })}

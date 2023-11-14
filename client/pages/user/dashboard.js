@@ -9,6 +9,7 @@ import PostList from "../../components/cards/PostList.js";
 import People from "../../components/cards/People.js";
 import Link from "next/link";
 import { Modal } from "antd";
+import CommentForm from "../../components/forms/CommentForm.js";
 
 const Dashboard = () => {
    const [state, setState] = useContext(UserContext);
@@ -166,8 +167,23 @@ const Dashboard = () => {
       setVisible(true);
    };
 
-   const addComment = async () => {
-      //
+   const addComment = async (e) => {
+      e.preventDefault();
+      // console.log("add comment to this post id: ", currentPost._id);
+      // console.log("save comment to db: ", comment);
+
+      try {
+         const { data } = await axios.put("/post/addcomment", {
+            postId: currentPost._id,
+            comment,
+         });
+         console.log("add comment", data);
+         setComment("");
+         setVisible(false);
+         newsFeed();
+      } catch (error) {
+         console.log(error);
+      }
    };
 
    const removeComment = async () => {
@@ -224,8 +240,11 @@ const Dashboard = () => {
                title="Comment"
                footer={null}
             >
-               {" "}
-               Show comment form.
+               <CommentForm
+                  comment={comment}
+                  setComment={setComment}
+                  addComment={addComment}
+               />
             </Modal>
          </div>
       </UserRoute>
