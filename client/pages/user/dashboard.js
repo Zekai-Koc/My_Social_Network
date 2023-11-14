@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import PostList from "../../components/cards/PostList.js";
 import People from "../../components/cards/People.js";
 import Link from "next/link";
+import { Modal } from "antd";
 
 const Dashboard = () => {
    const [state, setState] = useContext(UserContext);
@@ -16,6 +17,9 @@ const Dashboard = () => {
    const [uploading, setUploading] = useState(false);
    const [posts, setPosts] = useState([]);
    const [people, setPeople] = useState([]);
+   const [comment, setComment] = useState("");
+   const [visible, setVisible] = useState(false);
+   const [currentPost, setCurrentPost] = useState({});
 
    const router = useRouter();
 
@@ -157,6 +161,19 @@ const Dashboard = () => {
       }
    };
 
+   const handleComment = (post) => {
+      setCurrentPost(post);
+      setVisible(true);
+   };
+
+   const addComment = async () => {
+      //
+   };
+
+   const removeComment = async () => {
+      //
+   };
+
    return (
       <UserRoute>
          <div className="container-fluid">
@@ -185,6 +202,7 @@ const Dashboard = () => {
                      handleDelete={handleDelete}
                      handleLike={handleLike}
                      handleUnlike={handleUnlike}
+                     handleComment={handleComment}
                   />
                </div>
 
@@ -200,6 +218,15 @@ const Dashboard = () => {
                   <People people={people} handleFollow={handleFollow} />
                </div>
             </div>
+            <Modal
+               open={visible}
+               onCancel={() => setVisible(false)}
+               title="Comment"
+               footer={null}
+            >
+               {" "}
+               Show comment form.
+            </Modal>
          </div>
       </UserRoute>
    );

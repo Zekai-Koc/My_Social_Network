@@ -14,7 +14,13 @@ import { UserContext } from "../../context";
 import { useRouter } from "next/router";
 import { imageSource } from "../../functions";
 
-const PostList = ({ posts, handleDelete, handleLike, handleUnlike }) => {
+const PostList = ({
+   posts,
+   handleDelete,
+   handleLike,
+   handleUnlike,
+   handleComment,
+}) => {
    const [state] = useContext(UserContext);
 
    const router = useRouter();
@@ -80,6 +86,7 @@ const PostList = ({ posts, handleDelete, handleLike, handleUnlike }) => {
                            </div>
 
                            <CommentOutlined
+                              onClick={() => handleComment(post)}
                               className="text-danger pt-2 h5"
                               style={{ marginLeft: "2rem" }}
                            />
