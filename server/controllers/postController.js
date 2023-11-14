@@ -59,10 +59,11 @@ export const postsByUser = async (req, res) => {
 };
 
 export const userPost = async (req, res) => {
-   // console.log("req.params._id: ", req.params._id);
    try {
-      const post = await Post.findById(req.params._id);
-      // console.log(post);
+      const post = await Post.findById(req.params._id)
+         .populate("postedBy", "_id name image")
+         .populate("comments.postedBy", "_id name image");
+      // console.log(" !!!!!!!!!!!!!! ", post);
       res.json(post);
    } catch (error) {
       console.log(error);
@@ -170,6 +171,8 @@ export const addComment = async (req, res) => {
 
 export const removeComment = async (req, res) => {
    try {
+      console.log("removeComment: req.body ", req.body);
+
       const { postId, comment } = req.body;
 
       const post = await Post.findByIdAndUpdate(
@@ -181,6 +184,15 @@ export const removeComment = async (req, res) => {
       );
 
       res.json(post);
+   } catch (error) {
+      console.log(error);
+   }
+};
+
+export const totalPosts = async (req, res) => {
+   try {
+      const total = await Post.find().estimatedDocumentCount();
+      res.json(total);
    } catch (error) {
       console.log(error);
    }
