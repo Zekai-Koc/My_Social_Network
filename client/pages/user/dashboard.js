@@ -131,6 +131,32 @@ const Dashboard = () => {
       }
    };
 
+   const handleLike = async (_id) => {
+      // console.log("like this post: ", _id);
+      try {
+         const { data } = await axios.put("/post/likepost", {
+            _id,
+         });
+         console.log("like: ", data);
+         newsFeed();
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   const handleDislike = async (_id) => {
+      console.log("unlike this post: ", _id);
+      try {
+         const { data } = await axios.put("/post/unlikepost", {
+            _id,
+         });
+         console.log("unlike: ", data);
+         newsFeed();
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
    return (
       <UserRoute>
          <div className="container-fluid">
@@ -154,7 +180,12 @@ const Dashboard = () => {
                   <h3 className="text-center mb-3 text-warning">
                      Total posts (following): {posts.length}
                   </h3>
-                  <PostList posts={posts} handleDelete={handleDelete} />
+                  <PostList
+                     posts={posts}
+                     handleDelete={handleDelete}
+                     handleLike={handleLike}
+                     handleDislike={handleDislike}
+                  />
                </div>
 
                {/* <pre>{JSON.stringify(posts, null, 4)}</pre> */}
