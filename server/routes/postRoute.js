@@ -35,7 +35,7 @@ router.get("/userpost/:_id", requireSignin, userPost);
 router.put("/updatepost/:_id", requireSignin, canEditDeletePost, updatePost);
 router.delete("/deletepost/:_id", requireSignin, canEditDeletePost, deletePost);
 
-router.get("/newsfeed", requireSignin, newsFeed);
+router.get("/newsfeed/:page", requireSignin, newsFeed);
 
 router.put("/likepost", requireSignin, likePost);
 router.put("/unlikepost", requireSignin, unlikePost);

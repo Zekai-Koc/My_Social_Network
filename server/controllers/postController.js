@@ -100,17 +100,21 @@ export const deletePost = async (req, res) => {
 
 export const newsFeed = async (req, res) => {
    // console.log("req.auth: ", req.auth._id);
+   console.log("req.params.page: ", req.params.page);
    try {
       const user = await User.findById(req.auth._id);
-
       let following = user.following;
       following.push(user._id);
 
+      const currentPage = req.params.page || 1;
+      const perPage = 3;
+
       const posts = await Post.find({ postedBy: { $in: following } })
+         .skip((currentPage - 1) * perPage)
          .populate("postedBy", "_id name image")
          .populate("comments.postedBy", "_id name image")
          .sort({ createdAt: -1 })
-         .limit(10);
+         .limit(perPage);
 
       // console.log("posts: ", posts);
 

@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import PostList from "../../components/cards/PostList.js";
 import People from "../../components/cards/People.js";
 import Link from "next/link";
-import { Modal } from "antd";
+import { Modal, Pagination } from "antd";
 import CommentForm from "../../components/forms/CommentForm.js";
 
 const Dashboard = () => {
@@ -21,6 +21,8 @@ const Dashboard = () => {
    const [comment, setComment] = useState("");
    const [visible, setVisible] = useState(false);
    const [currentPost, setCurrentPost] = useState({});
+   const [totalPosts, setTotalPosts] = useState(0);
+   const [page, setPage] = useState(1);
 
    const router = useRouter();
 
@@ -29,11 +31,19 @@ const Dashboard = () => {
          newsFeed();
          findPeople();
       }
-   }, [state && state.token]);
+   }, [state && state.token, page]);
+
+   useEffect(() => {
+      try {
+         axios.get("/post/totalposts").then(({ data }) => setTotalPosts(data));
+      } catch (error) {
+         console.log(error);
+      }
+   }, []);
 
    const newsFeed = async () => {
       try {
-         const { data } = await axios.get(`/post/newsfeed`);
+         const { data } = await axios.get(`/post/newsfeed/${page}`);
          setPosts(data);
          if (data.error) {
             toast.error(data.error);
@@ -57,7 +67,7 @@ const Dashboard = () => {
 
    const postSubmit = async (e) => {
       e.preventDefault();
-      console.log("post: ", content);
+      // console.log("post: ", content);
 
       try {
          const { data } = await axios.post(`/post/createpost`, {
@@ -68,6 +78,7 @@ const Dashboard = () => {
          if (data.error) {
             toast.error(data.error);
          } else {
+            setPage(1);
             newsFeed();
             toast.success("Post created.");
             setContent("");
@@ -186,8 +197,22 @@ const Dashboard = () => {
       }
    };
 
-   const removeComment = async () => {
-      //
+   const removeComment = async (postId, comment) => {
+      console.log(postId, comment);
+
+      let answer = window.confirm("Are you sure to delete your post?");
+      if (!answer) return;
+
+      try {
+         const { data } = await axios.put(`/post/removecomment`, {
+            postId,
+            comment,
+         });
+         console.log("comment removed: ", data);
+         newsFeed();
+      } catch (error) {
+         console.log(error);
+      }
    };
 
    return (
@@ -219,6 +244,16 @@ const Dashboard = () => {
                      handleLike={handleLike}
                      handleUnlike={handleUnlike}
                      handleComment={handleComment}
+                     removeComment={removeComment}
+                  />
+                  <Pagination
+                     defaultCurrent={3}
+                     current={page}
+                     total={Math.floor(totalPosts / 3) * 10}
+                     onChange={(value) => {
+                        // console.log(value);
+                        setPage(value);
+                     }}
                   />
                </div>
 
