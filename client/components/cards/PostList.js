@@ -12,6 +12,7 @@ import {
 } from "@ant-design/icons";
 import { UserContext } from "../../context";
 import { useRouter } from "next/router";
+import { imageSource } from "../../functions";
 
 const PostList = ({ posts, handleDelete, handleLike, handleUnlike }) => {
    const [state] = useContext(UserContext);
@@ -25,12 +26,13 @@ const PostList = ({ posts, handleDelete, handleLike, handleUnlike }) => {
                return (
                   <div key={post._id} className="card mb-5">
                      <div className="card-header">
-                        <Avatar size={40}>
+                        {/* <Avatar size={40}>
                            {post &&
                               post.postedBy &&
                               post.postedBy.name &&
                               post.postedBy.name[0]}
-                        </Avatar>
+                        </Avatar> */}
+                        <Avatar size={40} src={imageSource(post)} />
                         <span
                            className="pt-2 ml-3"
                            style={{ marginLeft: "0.5rem" }}
