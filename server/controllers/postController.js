@@ -98,11 +98,9 @@ export const deletePost = async (req, res) => {
 };
 
 export const newsFeed = async (req, res) => {
-   console.log("req.auth: ", req.auth._id);
+   // console.log("req.auth: ", req.auth._id);
    try {
       const user = await User.findById(req.auth._id);
-
-      console.log("oooooooooooo ", user);
 
       let following = user.following;
       following.push(user._id);
@@ -112,8 +110,38 @@ export const newsFeed = async (req, res) => {
          .sort({ createdAt: -1 })
          .limit(10);
 
-      console.log("posts: ", posts);
+      // console.log("posts: ", posts);
 
+      res.json(posts);
+   } catch (error) {
+      console.log(error);
+   }
+};
+
+export const likePost = async (req, res) => {
+   try {
+      const posts = await Post.findByIdAndUpdate(
+         req.body._id,
+         {
+            $addToSet: { likes: req.auth._id },
+         },
+         { new: true }
+      );
+      res.json(posts);
+   } catch (error) {
+      console.log(error);
+   }
+};
+
+export const unlikePost = async (req, res) => {
+   try {
+      const posts = await Post.findByIdAndUpdate(
+         req.body._id,
+         {
+            $pull: { likes: req.auth._id },
+         },
+         { new: true }
+      );
       res.json(posts);
    } catch (error) {
       console.log(error);

@@ -54,15 +54,27 @@ const PostList = ({ posts, handleDelete, handleLike, handleUnlike }) => {
                         {post.image && <PostImage url={post.image.url} />}
 
                         <div className="d-flex">
-                           <HeartOutlined
-                              onClick={() => handleLike(post._id)}
-                              className="text-danger pt-2 h5"
-                           />
+                           {post.likes.includes(state.user._id) ? (
+                              <HeartFilled
+                                 onClick={() => handleUnlike(post._id)}
+                                 className="text-danger pt-2 h5"
+                              />
+                           ) : (
+                              <HeartOutlined
+                                 onClick={() => handleLike(post._id)}
+                                 className="text-danger pt-2 h5"
+                              />
+                           )}
+
                            <div
                               className="pt-2 pl-3"
                               style={{ marginLeft: "0.7rem" }}
                            >
-                              3 likes
+                              {post.likes.length > 0 ? (
+                                 <span>{post.likes.length} like(s)</span>
+                              ) : (
+                                 <span>No likes</span>
+                              )}{" "}
                            </div>
 
                            <CommentOutlined

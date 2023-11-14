@@ -144,7 +144,7 @@ const Dashboard = () => {
       }
    };
 
-   const handleDislike = async (_id) => {
+   const handleUnlike = async (_id) => {
       console.log("unlike this post: ", _id);
       try {
          const { data } = await axios.put("/post/unlikepost", {
@@ -184,7 +184,7 @@ const Dashboard = () => {
                      posts={posts}
                      handleDelete={handleDelete}
                      handleLike={handleLike}
-                     handleDislike={handleDislike}
+                     handleUnlike={handleUnlike}
                   />
                </div>
 
