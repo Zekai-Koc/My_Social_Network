@@ -14,6 +14,8 @@ import {
    addComment,
    removeComment,
    totalPosts,
+   posts,
+   getPost,
 } from "../controllers/postController.js";
 
 import { requireSignin, canEditDeletePost } from "../middlewares/index.js";
@@ -44,5 +46,9 @@ router.put("/addcomment", requireSignin, addComment);
 router.put("/removecomment", requireSignin, removeComment);
 
 router.get("/totalposts", totalPosts);
+
+router.get("/posts", posts);
+
+router.get("/post/:_id", getPost);
 
 export default router;
