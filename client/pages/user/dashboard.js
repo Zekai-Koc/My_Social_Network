@@ -10,6 +10,7 @@ import People from "../../components/cards/People.js";
 import Link from "next/link";
 import { Modal, Pagination } from "antd";
 import CommentForm from "../../components/forms/CommentForm.js";
+import Search from "../../components/Search.js";
 
 const Dashboard = () => {
    const [state, setState] = useContext(UserContext);
@@ -247,6 +248,7 @@ const Dashboard = () => {
                      removeComment={removeComment}
                   />
                   <Pagination
+                     className="pb-5"
                      defaultCurrent={3}
                      current={page}
                      total={Math.floor(totalPosts / 3) * 10}
@@ -260,12 +262,12 @@ const Dashboard = () => {
                {/* <pre>{JSON.stringify(posts, null, 4)}</pre> */}
 
                <div className="col-md-4">
+                  <Search /> <br />
                   {state && state.user && state.user.following && (
                      <Link href={`/user/following`}>
                         {state.user.following.length} Following
                      </Link>
                   )}
-
                   <People people={people} handleFollow={handleFollow} />
                </div>
             </div>
