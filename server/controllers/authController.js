@@ -290,6 +290,17 @@ export const searchUser = async (req, res) => {
    }
 };
 
+export const getUser = async (req, res) => {
+   const { username } = req.params;
+   if (!username) return;
+   try {
+      const user = await User.findOne({ username }).select("-password -secret");
+      res.json(user);
+   } catch (error) {
+      console.log(error);
+   }
+};
+
 /* ******************** */
 // export const register = async (req, res) => {
 //    // console.log("Register endpoint: ", req.body);
