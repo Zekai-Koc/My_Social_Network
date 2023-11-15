@@ -11,6 +11,7 @@ import {
    userFollowing,
    removeFollower,
    userUnfollow,
+   searchUser,
 } from "../controllers/authController.js";
 import { requireSignin } from "../middlewares/index.js";
 const router = express.Router();
@@ -26,5 +27,7 @@ router.get("/findpeople", requireSignin, findPeople);
 router.put("/userfollow", requireSignin, addFollower, userFollow);
 router.put("/userunfollow", requireSignin, removeFollower, userUnfollow);
 router.get("/userfollowing", requireSignin, userFollowing);
+
+router.get("/searchuser/:query", searchUser);
 
 export default router;
