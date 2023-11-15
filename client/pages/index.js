@@ -36,7 +36,7 @@ const Home = ({ posts }) => {
             <div className="row pt-5">
                {posts.map((post) => (
                   <div className="col-md-4">
-                     <Link href={`/post/${post._id}`}>
+                     <Link href={`/post/view/${post._id}`}>
                         <PostPublic key={post._id} post={post} />
                      </Link>{" "}
                   </div>

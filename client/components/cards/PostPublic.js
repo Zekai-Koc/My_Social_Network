@@ -82,9 +82,7 @@ const PostPublic = ({
                         className="pt-2 pl-3"
                         style={{ marginLeft: "0.7rem" }}
                      >
-                        <Link href={`/post/${post._id}`}>
-                           {post.comments.length} comment(s).
-                        </Link>
+                        {post.comments.length} comment(s).
                      </div>
                   </div>
                </div>
