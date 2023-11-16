@@ -15,7 +15,7 @@ const app = express();
 const serverHttp = http.createServer(app);
 const io = new Server(serverHttp, {
    cors: {
-      origin: "http://localhost/3000",
+      origin: "http://localhost:3000",
       methods: ["GET", "POST"],
       allowedHeaders: ["Content-type"],
    },
@@ -55,7 +55,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/post", postRouter);
 
 io.on("connect", (socket) => {
-   console.log("hhhhh ", socket);
+   console.log("socket id:  ", socket.id);
 });
 
 // START SERVER
